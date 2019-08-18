@@ -25,6 +25,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"runtime"
 
 	pb "github.com/nic-chen/grpc_server_example/proto"
 	"google.golang.org/grpc"
@@ -44,6 +45,9 @@ func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 }
 
 func main() {
+
+	runtime.GOMAXPROCS(1)
+
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
